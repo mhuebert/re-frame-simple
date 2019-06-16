@@ -1,4 +1,4 @@
-# Re-Frame Simple ![latest release](https://img.shields.io/github/tag/mhuebert/re-frame-simple.svg?color=%23309631&label=release)
+# Re-Frame Simple ![latest release](https://img.shields.io/clojars/v/mhuebert/re-frame-simple.svg?color=%23309631&label=release)
 
 Lightweight syntax for interacting with the `re-frame` db.
 
