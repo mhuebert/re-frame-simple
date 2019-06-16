@@ -3,7 +3,7 @@
             [garamond.main :as garamond]
             [deps-deploy.deps-deploy :as deps-deploy]))
 
-(def GARAMOND-ARGS ["--group-id" "re-frame-simple"
+(def GARAMOND-ARGS ["--group-id" "mhuebert"
                     "--artifact-id" "re-frame-simple"
                     "--scm-url" "https://github.com/mhuebert/re-frame-simple"])
 

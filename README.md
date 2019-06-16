@@ -1,14 +1,14 @@
-# Re-Frame Simple
+# Re-Frame Simple ![latest release](https://img.shields.io/github/tag/mhuebert/re-frame-simple.svg?color=%23309631&label=release)
 
 Lightweight syntax for interacting with the `re-frame` db.
 
-Goals:
+## Goals:
 
 1. No boilerplate: eliminate tedious, repetitive code.
 2. Fewer invented names: many operations are adequately described by the structure of your data + functions that operate on it.
 3. A functional interface: interact with the re-frame-db by calling functions (named events are also available to `dispatch`).
 
-### Reading data
+## Reading data
 
 ```
 (db/get :a)
@@ -19,7 +19,7 @@ These functions are backed by subscriptions, which update reactively in a Reagen
 
 To maintain performance as your db grows, `get-in` uses an intermediate subscription for each segment of the path. This can dramatically reduce the number of comparisons performed each time the db changes.
 
-### Writing data
+## Writing data
 
 ```
 (db/assoc! :a 1)
@@ -29,7 +29,7 @@ To maintain performance as your db grows, `get-in` uses an intermediate subscrip
 (db/update-in! [:counters :a] inc)
 ```
 
-### Named events
+## Named events
 
 `re-frame-simple` functions delegate to a standard set of re-frame events based on core Clojure functions:
 
@@ -48,15 +48,15 @@ To maintain performance as your db grows, `get-in` uses an intermediate subscrip
 
 ----
 
-### Motivation and Approach
+## Motivation and Approach
 
 `re-frame-simple` is a light syntax on top of `re-frame` which introduces fewer words and concepts and feels more like ordinary Clojure. Using paths into data and plain functions as 'identifiers' for transactions means that whether your system remains legible depends on the _structure_ of your data and the _functions_ you define to manipulate it, rather than names you invent to represent events and queries.
 
 `re-frame-simple` is a library, not a fork. It can be happily used in conjunction with existing `re-frame` code.
 
-### Get Started
+## Get Started
 
-Add the dependency in your `deps.edn` or `project.clj`.
+Add the dependency in your `deps.edn` or `project.clj` ([instructions](https://clojars.org/mhuebert/re-frame-simple))
 
 Require the namespace:
 
@@ -105,7 +105,7 @@ Also available are some operations for the whole db (rather than at a particular
 ```
 
 
-### Example
+## Example
 
 Here is a counter widget which uses `get-in` and `update-in` to read and write a counter, given an id.
 
@@ -127,7 +127,7 @@ Here is a counter widget which uses `get-in` and `update-in` to read and write a
 Using these tools, legibility of the reactivity system is built in to the design of your data structure, instead of added via explicitly named events/actions. (but we can still add those, when desired.)
 
 
-### Named updates
+## Named updates
 
 `defupdate` associates a keyword with an update function. This can be dispatched like any other re-frame handler.
 
@@ -144,7 +144,7 @@ Use with `re-frame.core/dispatch` (it's copied into the db namespace):
                            "C" 2}])
 ```
 
-### Named queries
+## Named queries
 
 Use `defquery` to create named queries that read data using `db/get` and `db/get-in`:
 
