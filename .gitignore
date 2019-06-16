@@ -2,3 +2,5 @@
 .cpcache
 .idea
 *.iml
+pom.xml
+target
