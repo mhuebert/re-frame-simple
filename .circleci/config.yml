@@ -1,0 +1,62 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2.1
+
+commands:
+  prepare:
+    steps:
+      - checkout
+      - run: git fetch --tags
+      - restore_cache:
+          key: re_frame_simple.{{ .Environment.CIRCLE_PROJECT_REPONAME }}-{{ checksum "deps.edn" }}
+
+executors:
+  clojure:
+    docker:
+      - image: circleci/clojure:tools-deps-1.10.0.411-node-browsers-legacy
+    environment:
+      JAVA_OPTS: "-Xms512m -Xmx3200m"
+
+jobs:
+  get-deps:
+    executor: clojure
+    steps:
+      - prepare
+
+      - run: clojure -A:release -Spath
+
+      - save_cache:
+          key: re_frame_simple.{{ .Environment.CIRCLE_PROJECT_REPONAME }}-{{ checksum "deps.edn" }}
+          paths:
+            - ~/.m2
+            - ~/.gitlibs
+            - .cpcache
+
+  build-and-deploy:
+    executor: clojure
+    steps:
+      - prepare
+      - run: clojure -A:release pom && clojure -A:release jar && cp pom.xml target
+      - run: clojure -A:release deploy
+
+workflows:
+  version: 2
+  test-and-deploy:
+    jobs:
+      - get-deps:
+          filters:
+            tags:
+              only: /.*/
+      - build-and-deploy:
+          requires:
+            - get-deps
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+
+
+
