@@ -5,12 +5,12 @@ Lightweight syntax for interacting with the `re-frame` db.
 ## Goals:
 
 1. No boilerplate: eliminate tedious, repetitive code.
-2. Fewer invented names: many operations are adequately described by the structure of your data + functions that operate on it.
-3. A functional interface: interact with the re-frame-db by calling functions (named events are also available to `dispatch`).
+2. Fewer invented names: many operations are described by the structure of your data + functions that operate on it.
+3. A functional interface: interact with the re-frame-db by calling functions (named events are also available).
 
 ## Reading data
 
-```
+```clj
 (db/get :a)
 (db/get-in [:a :b])
 ```
@@ -21,7 +21,7 @@ To maintain performance as your db grows, `get-in` uses an intermediate subscrip
 
 ## Writing data
 
-```
+```clj
 (db/assoc! :a 1)
 (db/assoc-in! [:b :c] 1)
 
@@ -33,17 +33,19 @@ To maintain performance as your db grows, `get-in` uses an intermediate subscrip
 
 `re-frame-simple` functions delegate to a standard set of re-frame events based on core Clojure functions:
 
-```
-:db/get
-:db/get-in
+```clj
+[:db/get <key> <?not-found>]
+[:db/get-in <path> <?not-found>]
 
-:db/update
-:db/update-in
+[:db/update <key> <update-function> & <args>]
+[:db/update-in <path> <update-function> & <args>]
 
-:db/assoc
-:db/assoc-in
+[:db/assoc <key> <value>]
+[:db/assoc-in <path> <value>]
 
-:db/swap
+[:db/swap <update-function> & <args>]
+
+[:db/identity]
 ```
 
 ----
